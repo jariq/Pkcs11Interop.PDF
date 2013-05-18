@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pkcs11Interop.PDF", "Pkcs11Interop.PDF\Pkcs11Interop.PDF.csproj", "{7750C55D-6A68-47C8-950C-849DCAAD1531}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pkcs11Interop.PDF.Tests", "Pkcs11Interop.PDF.Tests\Pkcs11Interop.PDF.Tests.csproj", "{D06D9915-1820-4536-A8F2-78C2359D74FD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7750C55D-6A68-47C8-950C-849DCAAD1531}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7750C55D-6A68-47C8-950C-849DCAAD1531}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7750C55D-6A68-47C8-950C-849DCAAD1531}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7750C55D-6A68-47C8-950C-849DCAAD1531}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D06D9915-1820-4536-A8F2-78C2359D74FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D06D9915-1820-4536-A8F2-78C2359D74FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D06D9915-1820-4536-A8F2-78C2359D74FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D06D9915-1820-4536-A8F2-78C2359D74FD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Pkcs11Interop.PDF\Pkcs11Interop.PDF.csproj
+	EndGlobalSection
+EndGlobal
