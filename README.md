@@ -1,7 +1,6 @@
 Pkcs11Interop.PDF
 =================
-Integration layer for Pkcs11Interop and iText (iTextSharp) libraries
---------------------------------------------------------------------
+**Integration layer for Pkcs11Interop and iText (iTextSharp) libraries**
 
 [iTextSharp](http://sourceforge.net/projects/itextsharp/) is a C# port of iText, an open-source Java library for PDF generation and manipulation. It can be used to create PDF documents from scratch, to convert XML to PDF, to fill out interactive PDF forms, to stamp new content on existing PDF documents, to split and merge existing PDF documents, to add digital signatures to PDF documents and much more.
 
