@@ -47,46 +47,55 @@ namespace Net.Pkcs11Interop.PDF.Tests
 		/// <summary>
 		/// Path to the unsigned PDF that will be created by this test
 		/// </summary>
+		// Path to the unsigned PDF that will be created by this test
 		public static string unsignedPdf = @"c:\Pkcs11Interop.PDF.Tests\unsigned.pdf";
 
 		/// <summary>
 		/// Path to the signed PDF that will be created by this test
 		/// </summary>
+		// Path to the signed PDF that will be created by this test
 		public static string signedPdf = @"c:\Pkcs11Interop.PDF.Tests\signed.pdf";
 
 		/// <summary>
 		/// Path to the unmanaged PCKS#11 library
 		/// </summary>
+		// Path to the unmanaged PCKS#11 library
 		public static string libraryPath = @"siecap11.dll";
 
 		/// <summary>
 		/// Serial number of the token (smartcard) that contains signing key. May be null if tokenLabel is specified.
 		/// </summary>
+		// Serial number of the token (smartcard) that contains signing key. May be null if tokenLabel is specified.
 		public static string tokenSerial = null;
 
 		/// <summary>
 		/// Label of of the token (smartcard) that contains signing key. May be null if tokenSerial is specified.
 		/// </summary>
+		// Label of of the token (smartcard) that contains signing key. May be null if tokenSerial is specified.
 		public static string tokenLabel = @"Pkcs11Interop";
 
 		/// <summary>
 		/// PIN for the token (smartcard)
 		/// </summary>
+		// PIN for the token (smartcard)
 		public static string pin = @"11111111";
 
 		/// <summary>
 		/// Label (value of CKA_LABEL attribute) of the private key used for signing. May be null if ckaId is specified.
 		/// </summary>
+		// Label (value of CKA_LABEL attribute) of the private key used for signing. May be null if ckaId is specified.
 		public static string ckaLabel = @"John Doe";
 
 		/// <summary>
 		/// Hex encoded string with identifier (value of CKA_ID attribute) of the private key used for signing. May be null if ckaLabel is specified.
 		/// </summary>
+		// Hex encoded string with identifier (value of CKA_ID attribute) of the private key used for signing. May be null if ckaLabel is specified.
 		public static string ckaId = null;
 
 		/// <summary>
 		/// Hash algorihtm used for the signature creation
 		/// </summary>
+		// Hash algorihtm used for the signature creation
 		public static HashAlgorithm hashAlgorithm = HashAlgorithm.SHA256;
 
 		#endregion
@@ -94,6 +103,7 @@ namespace Net.Pkcs11Interop.PDF.Tests
 		/// <summary>
 		/// PDF signature creation with RSA private key stored on PKCS#11 compatible device test.
 		/// </summary>
+		// PDF signature creation with RSA private key stored on PKCS#11 compatible device test.
 		[Test()]
 		public void SignPdfTest()
 		{
