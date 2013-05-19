@@ -13,8 +13,8 @@ power of PKCS#11 API to .NET environment. PKCS#11 is cryptography standard
 published by RSA Laboratories that defines ANSI C API (called cryptoki) 
 to access smart cards and other types of cryptographic hardware.
 
-Pkcs11interop.PDF is also an open-source project written in C#. It creates an 
-integration layer between Pkcs11Interop and iTextSharp libraries by extending 
+Pkcs11interop.PDF [2] is also an open-source project written in C#. It creates 
+an integration layer between Pkcs11Interop and iTextSharp libraries by extending 
 iTextSharp with the ability to digitally sign PDF document with almost any 
 PKCS#11 compatible device. Pkcs11interop.PDF is very easy to use. All you need 
 to do is create an instance of Net.Pkcs11Interop.PDF.Pkcs11Signature class 
