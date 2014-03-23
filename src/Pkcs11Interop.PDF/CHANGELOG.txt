@@ -1,0 +1,11 @@
+﻿Pkcs11Interop.PDF 1.1.0 (2014-03-23)
+ - Pkcs11Interop has been updated to version 2.0
+ - iTextSharp has been updated to version 5.5
+ - Uses NuGet to manage external references
+ - Uses widely supported CKM_RSA_PKCS mechanism instead of CKM_SHA*_RSA_PKCS
+ - Pkcs11Signature class has been renamed to Pkcs11RsaSignature
+ - More detailed description of the code samples
+ - Other minor bug fixes
+
+Pkcs11Interop.PDF 1.0.0 (2013-05-22)
+ - Initial publicly accessible version
