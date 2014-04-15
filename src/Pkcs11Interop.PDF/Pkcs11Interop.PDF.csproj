@@ -45,6 +45,7 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CertUtils.cs" />
     <Compile Include="Doxygen.cs" />
     <Compile Include="HashAlgorithm.cs" />
     <Compile Include="ObjectNotFoundException.cs" />

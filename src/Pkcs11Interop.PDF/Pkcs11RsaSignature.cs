@@ -178,43 +178,109 @@ namespace Net.Pkcs11Interop.PDF
 
         #endregion
 
-        #region GetCertificate
+        #region Certificates
 
         /// <summary>
         /// Gets the raw data of certificate related to private key used for signing
         /// </summary>
         /// <returns>Raw data of certificate related to private key used for signing</returns>
+        public byte[] GetSigningCertificate()
+        {
+            if (this._disposed)
+                throw new ObjectDisposedException(this.GetType().FullName);
+
+            // Don't look for certificate if it was already found
+            if (_certificateHandle == null)
+            {
+                _certificateHandle = FindCertificate(_ckaLabel, _ckaId);
+                if (_certificateHandle == null)
+                    throw new ObjectNotFoundException(string.Format("Certificate with label \"{0}\" and id \"{1}\" was not found", _ckaLabel, ConvertUtils.BytesToHexString(_ckaId)));
+            }
+
+            // Don't read certificate from token if it was already read
+            if (_certificateData == null)
+            {
+                using (Session session = _slot.OpenSession(true))
+                {
+                    List<CKA> attributes = new List<CKA>();
+                    attributes.Add(CKA.CKA_VALUE);
+
+                    List<ObjectAttribute> certificateAttributes = _session.GetAttributeValue(_certificateHandle, attributes);
+                    _certificateData = certificateAttributes[0].GetValueAsByteArray();
+                }
+            }
+
+            return _certificateData;
+        }
+
+        /// <summary>
+        /// Gets the raw data of all certificates stored in device
+        /// </summary>
+        /// <returns>Raw data of all certificates stored in device</returns>
+        public List<byte[]> GetAllCertificates()
+        {
+            if (this._disposed)
+                throw new ObjectDisposedException(this.GetType().FullName);
+
+            List<byte[]> certificates = new List<byte[]>();
+
+            using (Session session = _slot.OpenSession(true))
+            {
+                List<ObjectAttribute> searchTemplate = new List<ObjectAttribute>();
+                searchTemplate.Add(new ObjectAttribute(CKA.CKA_CLASS, CKO.CKO_CERTIFICATE));
+                searchTemplate.Add(new ObjectAttribute(CKA.CKA_CERTIFICATE_TYPE, CKC.CKC_X_509));
+
+                List<CKA> attributes = new List<CKA>();
+                attributes.Add(CKA.CKA_VALUE);
+
+                List<ObjectHandle> foundObjects = _session.FindAllObjects(searchTemplate);
+                foreach (ObjectHandle foundObject in foundObjects)
+                {
+                    List<ObjectAttribute> objectAttributes = _session.GetAttributeValue(foundObject, attributes);
+                    certificates.Add(objectAttributes[0].GetValueAsByteArray());
+                }
+            }
+
+            return certificates;
+        }
+
+        /// <summary>
+        /// Gets the raw data of certificate related to private key used for signing
+        /// </summary>
+        /// <returns>Raw data of certificate related to private key used for signing</returns>
+        [Obsolete("Use GetSigningCertificate() method instead")]
         public byte[] GetCertificateAsByteArray()
         {
             if (this._disposed)
                 throw new ObjectDisposedException(this.GetType().FullName);
 
-            return GetCertificateContent();
+            return GetSigningCertificate();
         }
 
         /// <summary>
         /// Gets the certificate related to private key used for signing as Org.BouncyCastle.X509.X509Certificate
         /// </summary>
         /// <returns>Certificate related to private key used for signing as Org.BouncyCastle.X509.X509Certificate</returns>
+        [Obsolete("Use GetSigningCertificate() method instead")]
         public Org.BouncyCastle.X509.X509Certificate GetCertificateAsX509Certificate()
         {
             if (this._disposed)
                 throw new ObjectDisposedException(this.GetType().FullName);
 
-            Org.BouncyCastle.X509.X509CertificateParser x509CertificateParser = new Org.BouncyCastle.X509.X509CertificateParser();
-            return x509CertificateParser.ReadCertificate(GetCertificateContent());
+            return CertUtils.ToBouncyCastleObject(GetSigningCertificate());
         }
 
         /// <summary>
         /// Gets the certificate related to private key used for signing as System.Security.Cryptography.X509Certificates.X509Certificate2
         /// </summary>
         /// <returns>Certificate related to private key used for signing as System.Security.Cryptography.X509Certificates.X509Certificate2</returns>
+        [Obsolete("Use GetSigningCertificate() method instead")]
         public X509Certificate2 GetCertificateAsX509Certificate2()
         {
             if (this._disposed)
                 throw new ObjectDisposedException(this.GetType().FullName);
 
-            return new X509Certificate2(GetCertificateContent());
+            return CertUtils.ToDotNetObject(GetSigningCertificate());
         }
 
         #endregion
@@ -379,39 +445,6 @@ namespace Net.Pkcs11Interop.PDF
 
                 return foundObjects[0];
             }
-        }
-
-        /// <summary>
-        /// Gets the raw data (value of CKA_VALUE attribute) of certificate related to private key used for signing
-        /// </summary>
-        /// <returns>Raw data of certificate related to private key used for signing</returns>
-        private byte[] GetCertificateContent()
-        {
-            if (this._disposed)
-                throw new ObjectDisposedException(this.GetType().FullName);
-
-            // Don't look for certificate if it was already found
-            if (_certificateHandle == null)
-            {
-                _certificateHandle = FindCertificate(_ckaLabel, _ckaId);
-                if (_certificateHandle == null)
-                    throw new ObjectNotFoundException(string.Format("Certificate with label \"{0}\" and id \"{1}\" was not found", _ckaLabel, ConvertUtils.BytesToHexString(_ckaId)));
-            }
-
-            // Don't read certificate from token if it was already read
-            if (_certificateData == null)
-            {
-                using (Session session = _slot.OpenSession(true))
-                {
-                    List<CKA> attributes = new List<CKA>();
-                    attributes.Add(CKA.CKA_VALUE);
-
-                    List<ObjectAttribute> certificateAttributes = _session.GetAttributeValue(_certificateHandle, attributes);
-                    _certificateData = certificateAttributes[0].GetValueAsByteArray();
-                }
-            }
-
-            return _certificateData;
         }
 
         /// <summary>

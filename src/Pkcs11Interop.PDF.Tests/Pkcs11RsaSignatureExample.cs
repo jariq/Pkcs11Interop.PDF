@@ -14,14 +14,12 @@
  *  Please contact JWC s.r.o. at <info@pkcs11interop.net> for more details.
  */
 
-using System;
 using System.Collections.Generic;
 using System.IO;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using iTextSharp.text.pdf.security;
 using NUnit.Framework;
-using Org.BouncyCastle.X509;
 
 namespace Net.Pkcs11Interop.PDF.Tests
 {
@@ -85,15 +83,14 @@ namespace Net.Pkcs11Interop.PDF.Tests
             // Create instance of Pkcs11Signature class that allows iText to create PKCS#1 v1.5 RSA signature with the private key stored on PKCS#11 compatible device
             using (Pkcs11RsaSignature pkcs11RsaSignature = new Pkcs11RsaSignature(libraryPath, tokenSerial, tokenLabel, pin, ckaLabel, ckaId, hashAlgorithm))
             {
-                // Build certificate chain for a signing certificate.
-                // This example uses self-signed certificate so the chain contains only one certificate.
-                // When signing certificate is stored on the token it can be usually read with GetCertificate*() methods of Pkcs11Signature class.
-                X509Certificate signingCertificate = pkcs11RsaSignature.GetCertificateAsX509Certificate();
-                if (signingCertificate == null)
-                    throw new Exception("Signing certificate is not present on the token");
+                // When signing certificate is stored on the token it can be usually read with GetSigningCertificate() method
+                byte[] signingCertificate = pkcs11RsaSignature.GetSigningCertificate();
 
-                ICollection<X509Certificate> certificateChain = new List<X509Certificate>();
-                certificateChain.Add(signingCertificate);
+                // All certificates stored on the token can be usually read with GetAllCertificates() method
+                List<byte[]> otherCertificates = pkcs11RsaSignature.GetAllCertificates();
+
+                // Build certification path for the signing certificate
+                ICollection<Org.BouncyCastle.X509.X509Certificate> certPath = CertUtils.BuildCertPath(signingCertificate, otherCertificates);
 
                 // Read unsigned PDF document
                 using (PdfReader pdfReader = new PdfReader(unsignedPdfPath))
@@ -105,7 +102,7 @@ namespace Net.Pkcs11Interop.PDF.Tests
                         using (PdfStamper pdfStamper = PdfStamper.CreateSignature(pdfReader, outputStream, '\0', Path.GetTempFileName(), true))
                         {
                             // Sign PDF document
-                            MakeSignature.SignDetached(pdfStamper.SignatureAppearance, pkcs11RsaSignature, certificateChain, null, null, null, 0, CryptoStandard.CADES);
+                            MakeSignature.SignDetached(pdfStamper.SignatureAppearance, pkcs11RsaSignature, certPath, null, null, null, 0, CryptoStandard.CADES);
                         }
                     }
                 }
