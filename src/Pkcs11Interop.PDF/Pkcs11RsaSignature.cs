@@ -147,8 +147,6 @@ namespace Net.Pkcs11Interop.PDF
                 _session.Login(CKU.CKU_USER, pin);
 
                 _privateKeyHandle = FindPrivateKey(ckaLabel, ckaId);
-                if (_privateKeyHandle == null)
-                    throw new ObjectNotFoundException(string.Format("Private key with label \"{0}\" and id \"{1}\" was not found", ckaLabel, ConvertUtils.BytesToHexString(ckaId)));
 
                 _ckaLabel = ckaLabel;
                 _ckaId = ckaId;
@@ -191,11 +189,7 @@ namespace Net.Pkcs11Interop.PDF
 
             // Don't look for certificate if it was already found
             if (_certificateHandle == null)
-            {
                 _certificateHandle = FindCertificate(_ckaLabel, _ckaId);
-                if (_certificateHandle == null)
-                    throw new ObjectNotFoundException(string.Format("Certificate with label \"{0}\" and id \"{1}\" was not found", _ckaLabel, ConvertUtils.BytesToHexString(_ckaId)));
-            }
 
             // Don't read certificate from token if it was already read
             if (_certificateData == null)
@@ -411,8 +405,10 @@ namespace Net.Pkcs11Interop.PDF
                     searchTemplate.Add(new ObjectAttribute(CKA.CKA_ID, ckaId));
 
                 List<ObjectHandle> foundObjects = _session.FindAllObjects(searchTemplate);
-                if (foundObjects.Count != 1)
-                    return null;
+                if (foundObjects.Count < 1)
+                    throw new ObjectNotFoundException(string.Format("Private key with label \"{0}\" and id \"{1}\" was not found", ckaLabel, ConvertUtils.BytesToHexString(ckaId)));
+                else if (foundObjects.Count > 1)
+                    throw new ObjectNotFoundException(string.Format("More than one private key with label \"{0}\" and id \"{1}\" was found", ckaLabel, ConvertUtils.BytesToHexString(ckaId)));
 
                 return foundObjects[0];
             }
@@ -440,8 +436,10 @@ namespace Net.Pkcs11Interop.PDF
                     searchTemplate.Add(new ObjectAttribute(CKA.CKA_ID, ckaId));
 
                 List<ObjectHandle> foundObjects = _session.FindAllObjects(searchTemplate);
-                if (foundObjects.Count != 1)
-                    return null;
+                if (foundObjects.Count < 1)
+                    throw new ObjectNotFoundException(string.Format("Certificate with label \"{0}\" and id \"{1}\" was not found", _ckaLabel, ConvertUtils.BytesToHexString(_ckaId)));
+                else if (foundObjects.Count > 1)
+                    throw new ObjectNotFoundException(string.Format("More than one certificate with label \"{0}\" and id \"{1}\" was found", _ckaLabel, ConvertUtils.BytesToHexString(_ckaId)));
 
                 return foundObjects[0];
             }
