@@ -28,7 +28,8 @@ using Org.BouncyCastle.Crypto.Digests;
 namespace Net.Pkcs11Interop.PDF
 {
     /// <summary>
-    /// PKCS#1 v1.5 RSA signature creator that uses private key stored on PKCS#11 compatible device
+    /// PKCS#1 v1.5 RSA signature creator that uses private key stored on PKCS#11 compatible device.
+    /// In multithreaded environment one instance of this class should be reused by all the threads.
     /// </summary>
     public class Pkcs11RsaSignature : IExternalSignature, IDisposable
     {
