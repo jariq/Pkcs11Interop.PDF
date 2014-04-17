@@ -16,6 +16,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using Org.BouncyCastle.Pkix;
 using Org.BouncyCastle.X509.Store;
@@ -27,7 +28,7 @@ namespace Net.Pkcs11Interop.PDF
     /// <summary>
     /// Utility class that helps with certificate processing
     /// </summary>
-    public static class CertUtils // TODO : Test methods
+    public static class CertUtils
     {
         /// <summary>
         /// BouncyCastle certificate parser
@@ -70,7 +71,11 @@ namespace Net.Pkcs11Interop.PDF
             if (data == null)
                 throw new ArgumentNullException("data");
 
-            return _x509CertificateParser.ReadCertificate(data);
+            BCX509.X509Certificate bcCert = _x509CertificateParser.ReadCertificate(data);
+            if (bcCert == null)
+                throw new CryptographicException("Cannot find the requested object.");
+
+            return bcCert;
         }
 
         /// <summary>
@@ -83,7 +88,11 @@ namespace Net.Pkcs11Interop.PDF
             if (cert == null)
                 throw new ArgumentNullException("cert");
 
-            return _x509CertificateParser.ReadCertificate(cert.RawData);
+            BCX509.X509Certificate bcCert = _x509CertificateParser.ReadCertificate(cert.RawData);
+            if (bcCert == null)
+                throw new CryptographicException("Cannot find the requested object.");
+
+            return bcCert;
         }
 
         /// <summary>
@@ -137,38 +146,41 @@ namespace Net.Pkcs11Interop.PDF
         /// Builds certification path for provided signing certificate
         /// </summary>
         /// <param name="signingCertificate">Signing certificate</param>
-        /// <param name="otherCertificates">Other certificates that should be used in path building process</param>
-        /// <returns>Full certification path if building process succeeded; signing certificate otherwise</returns>
+        /// <param name="otherCertificates">Other certificates that should be used in path building process. Self-signed certificates from this list are used as trust anchors.</param>
+        /// <returns>Certification path for provided signing certificate</returns>
         public static ICollection<BCX509.X509Certificate> BuildCertPath(byte[] signingCertificate, List<byte[]> otherCertificates)
         {
             if (signingCertificate == null)
                 throw new ArgumentNullException("signingCertificate");
 
+            List<BCX509.X509Certificate> result = new List<BCX509.X509Certificate>();
+
             BCX509.X509Certificate signingCert = ToBouncyCastleObject(signingCertificate);
             BCCollections.ISet trustAnchors = new BCCollections.HashSet();
             List<BCX509.X509Certificate> otherCerts = new List<BCX509.X509Certificate>();
 
-            if (otherCertificates != null)
-            {
-                otherCerts.Add(signingCert);
-
-                foreach (byte[] otherCertificate in otherCertificates)
-                {
-                    BCX509.X509Certificate otherCert = ToBouncyCastleObject(otherCertificate);
-                    otherCerts.Add(ToBouncyCastleObject(otherCertificate));
-                    if (IsSelfSigned(otherCert))
-                        trustAnchors.Add(new TrustAnchor(otherCert, null));
-                }
-            }
-
-            List<BCX509.X509Certificate> result = new List<BCX509.X509Certificate>();
-
-            if (trustAnchors.Count < 1)
+            if (IsSelfSigned(signingCert))
             {
                 result.Add(signingCert);
             }
             else
             {
+                otherCerts.Add(signingCert);
+
+                if (otherCertificates != null)
+                {
+                    foreach (byte[] otherCertificate in otherCertificates)
+                    {
+                        BCX509.X509Certificate otherCert = ToBouncyCastleObject(otherCertificate);
+                        otherCerts.Add(ToBouncyCastleObject(otherCertificate));
+                        if (IsSelfSigned(otherCert))
+                            trustAnchors.Add(new TrustAnchor(otherCert, null));
+                    }
+                }
+
+                if (trustAnchors.Count < 1)
+                    throw new PkixCertPathBuilderException("Provided certificates do not contain self-signed root certificate");
+
                 X509CertStoreSelector targetConstraints = new X509CertStoreSelector();
                 targetConstraints.Certificate = signingCert;
 
@@ -178,7 +190,7 @@ namespace Net.Pkcs11Interop.PDF
 
                 PkixCertPathBuilder certPathBuilder = new PkixCertPathBuilder();
                 PkixCertPathBuilderResult certPathBuilderResult = certPathBuilder.Build(certPathBuilderParameters);
-                
+
                 foreach (BCX509.X509Certificate certPathCert in certPathBuilderResult.CertPath.Certificates)
                     result.Add(certPathCert);
 
