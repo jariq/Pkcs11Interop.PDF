@@ -76,14 +76,14 @@ namespace Net.Pkcs11Interop.PDF
         private HashAlgorithm _hashAlgorihtm = HashAlgorithm.SHA512;
 
         /// <summary>
-        /// Handle of certificate related to private key used for signing 
-        /// </summary>
-        private ObjectHandle _certificateHandle = null;
-
-        /// <summary>
         /// Raw data of certificate related to private key used for signing
         /// </summary>
-        private byte[] _certificateData = null;
+        private byte[] _signingCertificate = null;
+
+        /// <summary>
+        /// Raw data of all certificates stored in device
+        /// </summary>
+        private List<byte[]> _allCertificates = null;
 
         #endregion
 
@@ -188,24 +188,34 @@ namespace Net.Pkcs11Interop.PDF
             if (this._disposed)
                 throw new ObjectDisposedException(this.GetType().FullName);
 
-            // Don't look for certificate if it was already found
-            if (_certificateHandle == null)
-                _certificateHandle = FindCertificate(_ckaLabel, _ckaId);
-
-            // Don't read certificate from token if it was already read
-            if (_certificateData == null)
+            // Don't read certificate from token if it has already been read
+            if (_signingCertificate == null)
             {
                 using (Session session = _slot.OpenSession(true))
                 {
+                    List<ObjectAttribute> searchTemplate = new List<ObjectAttribute>();
+                    searchTemplate.Add(new ObjectAttribute(CKA.CKA_CLASS, CKO.CKO_CERTIFICATE));
+                    searchTemplate.Add(new ObjectAttribute(CKA.CKA_CERTIFICATE_TYPE, CKC.CKC_X_509));
+                    if (!string.IsNullOrEmpty(_ckaLabel))
+                        searchTemplate.Add(new ObjectAttribute(CKA.CKA_LABEL, _ckaLabel));
+                    if (_ckaId != null)
+                        searchTemplate.Add(new ObjectAttribute(CKA.CKA_ID, _ckaId));
+
+                    List<ObjectHandle> foundObjects = _session.FindAllObjects(searchTemplate);
+                    if (foundObjects.Count < 1)
+                        throw new ObjectNotFoundException(string.Format("Certificate with label \"{0}\" and id \"{1}\" was not found", _ckaLabel, ConvertUtils.BytesToHexString(_ckaId)));
+                    else if (foundObjects.Count > 1)
+                        throw new ObjectNotFoundException(string.Format("More than one certificate with label \"{0}\" and id \"{1}\" was found", _ckaLabel, ConvertUtils.BytesToHexString(_ckaId)));
+
                     List<CKA> attributes = new List<CKA>();
                     attributes.Add(CKA.CKA_VALUE);
 
-                    List<ObjectAttribute> certificateAttributes = _session.GetAttributeValue(_certificateHandle, attributes);
-                    _certificateData = certificateAttributes[0].GetValueAsByteArray();
+                    List<ObjectAttribute> certificateAttributes = _session.GetAttributeValue(foundObjects[0], attributes);
+                    _signingCertificate = certificateAttributes[0].GetValueAsByteArray();
                 }
             }
 
-            return _certificateData;
+            return _signingCertificate;
         }
 
         /// <summary>
@@ -217,26 +227,32 @@ namespace Net.Pkcs11Interop.PDF
             if (this._disposed)
                 throw new ObjectDisposedException(this.GetType().FullName);
 
-            List<byte[]> certificates = new List<byte[]>();
-
-            using (Session session = _slot.OpenSession(true))
+            // Don't read certificates from token if they have already been read
+            if (_allCertificates == null)
             {
-                List<ObjectAttribute> searchTemplate = new List<ObjectAttribute>();
-                searchTemplate.Add(new ObjectAttribute(CKA.CKA_CLASS, CKO.CKO_CERTIFICATE));
-                searchTemplate.Add(new ObjectAttribute(CKA.CKA_CERTIFICATE_TYPE, CKC.CKC_X_509));
+                List<byte[]> certificates = new List<byte[]>();
 
-                List<CKA> attributes = new List<CKA>();
-                attributes.Add(CKA.CKA_VALUE);
-
-                List<ObjectHandle> foundObjects = _session.FindAllObjects(searchTemplate);
-                foreach (ObjectHandle foundObject in foundObjects)
+                using (Session session = _slot.OpenSession(true))
                 {
-                    List<ObjectAttribute> objectAttributes = _session.GetAttributeValue(foundObject, attributes);
-                    certificates.Add(objectAttributes[0].GetValueAsByteArray());
+                    List<ObjectAttribute> searchTemplate = new List<ObjectAttribute>();
+                    searchTemplate.Add(new ObjectAttribute(CKA.CKA_CLASS, CKO.CKO_CERTIFICATE));
+                    searchTemplate.Add(new ObjectAttribute(CKA.CKA_CERTIFICATE_TYPE, CKC.CKC_X_509));
+
+                    List<CKA> attributes = new List<CKA>();
+                    attributes.Add(CKA.CKA_VALUE);
+
+                    List<ObjectHandle> foundObjects = _session.FindAllObjects(searchTemplate);
+                    foreach (ObjectHandle foundObject in foundObjects)
+                    {
+                        List<ObjectAttribute> objectAttributes = _session.GetAttributeValue(foundObject, attributes);
+                        certificates.Add(objectAttributes[0].GetValueAsByteArray());
+                    }
                 }
+
+                _allCertificates = certificates;
             }
 
-            return certificates;
+            return _allCertificates;
         }
 
         /// <summary>
@@ -416,37 +432,6 @@ namespace Net.Pkcs11Interop.PDF
         }
 
         /// <summary>
-        /// Finds certificate that matches specified criteria
-        /// </summary>
-        /// <param name="ckaLabel">Label (value of CKA_LABEL attribute) of the certificate</param>
-        /// <param name="ckaId">Identifier (value of CKA_ID attribute) of the certificate</param>
-        /// <returns>Handle of certificate that matches specified criteria</returns>
-        private ObjectHandle FindCertificate(string ckaLabel, byte[] ckaId)
-        {
-            if (this._disposed)
-                throw new ObjectDisposedException(this.GetType().FullName);
-
-            using (Session session = _slot.OpenSession(true))
-            {
-                List<ObjectAttribute> searchTemplate = new List<ObjectAttribute>();
-                searchTemplate.Add(new ObjectAttribute(CKA.CKA_CLASS, CKO.CKO_CERTIFICATE));
-                searchTemplate.Add(new ObjectAttribute(CKA.CKA_CERTIFICATE_TYPE, CKC.CKC_X_509));
-                if (!string.IsNullOrEmpty(ckaLabel))
-                    searchTemplate.Add(new ObjectAttribute(CKA.CKA_LABEL, ckaLabel));
-                if (ckaId != null)
-                    searchTemplate.Add(new ObjectAttribute(CKA.CKA_ID, ckaId));
-
-                List<ObjectHandle> foundObjects = _session.FindAllObjects(searchTemplate);
-                if (foundObjects.Count < 1)
-                    throw new ObjectNotFoundException(string.Format("Certificate with label \"{0}\" and id \"{1}\" was not found", _ckaLabel, ConvertUtils.BytesToHexString(_ckaId)));
-                else if (foundObjects.Count > 1)
-                    throw new ObjectNotFoundException(string.Format("More than one certificate with label \"{0}\" and id \"{1}\" was found", _ckaLabel, ConvertUtils.BytesToHexString(_ckaId)));
-
-                return foundObjects[0];
-            }
-        }
-
-        /// <summary>
         /// Creates PKCS#1 DigestInfo
         /// </summary>
         /// <param name="hash">Hash value</param>
@@ -507,8 +492,8 @@ namespace Net.Pkcs11Interop.PDF
                 // Dispose managed objects
                 if (disposing)
                 {
-                    _certificateData = null;
-                    _certificateHandle = null;
+                    _allCertificates = null;
+                    _signingCertificate = null;
                     _hashAlgorihtm = HashAlgorithm.SHA512;
                     _ckaId = null;
                     _ckaLabel = null;
