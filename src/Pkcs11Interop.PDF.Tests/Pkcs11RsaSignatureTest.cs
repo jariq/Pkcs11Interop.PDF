@@ -410,10 +410,10 @@ namespace Net.Pkcs11Interop.PDF.Tests
         }
 
         /// <summary>
-        /// Tests GetCertificate* methods
+        /// Tests GetSigningCertificate method
         /// </summary>
         [Test()]
-        public void GetCertificateTest()
+        public void GetSigningCertificateTest()
         {
             // CKA_ID and CKA_LABEL of the temporary RSA key pair
             byte[] ckaId = null;
@@ -467,17 +467,9 @@ namespace Net.Pkcs11Interop.PDF.Tests
             // Test Pkcs11RsaSignature with RSA key pair associated with certificate present on the token
             using (Pkcs11RsaSignature pkcs11RsaSignature = new Pkcs11RsaSignature(_libraryPath, _tokenSerial, _tokenLabel, _pin, _ckaLabel, _ckaId, _hashAlgorithm))
             {
-                byte[] cert = pkcs11RsaSignature.GetCertificateAsByteArray();
+                byte[] cert = pkcs11RsaSignature.GetSigningCertificate();
                 Assert.IsTrue(cert != null);
                 Assert.IsTrue(ConvertUtils.BytesToBase64String(cert) == _certificate);
-
-                X509Certificate x509Cert = pkcs11RsaSignature.GetCertificateAsX509Certificate();
-                Assert.IsTrue(x509Cert != null);
-                Assert.IsTrue(ConvertUtils.BytesToBase64String(x509Cert.GetEncoded()) == _certificate);
-
-                System.Security.Cryptography.X509Certificates.X509Certificate2 x509Cert2 = pkcs11RsaSignature.GetCertificateAsX509Certificate2();
-                Assert.IsTrue(x509Cert2 != null);
-                Assert.IsTrue(ConvertUtils.BytesToBase64String(x509Cert2.RawData) == _certificate);
             }
 
             // Test Pkcs11RsaSignature with temporary RSA key pair that is not associated with any certificate present on the token
@@ -485,27 +477,7 @@ namespace Net.Pkcs11Interop.PDF.Tests
             {
                 try
                 {
-                    pkcs11RsaSignature.GetCertificateAsByteArray();
-                    Assert.Fail("Exception expected but not thrown");
-                }
-                catch (Exception ex)
-                {
-                    Assert.IsTrue(ex is ObjectNotFoundException);
-                }
-
-                try
-                {
-                    pkcs11RsaSignature.GetCertificateAsX509Certificate();
-                    Assert.Fail("Exception expected but not thrown");
-                }
-                catch (Exception ex)
-                {
-                    Assert.IsTrue(ex is ObjectNotFoundException);
-                }
-
-                try
-                {
-                    pkcs11RsaSignature.GetCertificateAsX509Certificate2();
+                    pkcs11RsaSignature.GetSigningCertificate();
                     Assert.Fail("Exception expected but not thrown");
                 }
                 catch (Exception ex)
@@ -536,6 +508,32 @@ namespace Net.Pkcs11Interop.PDF.Tests
 
                     session.Logout();
                 }
+            }
+        }
+
+        /// <summary>
+        /// Tests GetAllCertificates method
+        /// </summary>
+        [Test()]
+        public void GetAllCertificatesTest()
+        {
+            using (Pkcs11RsaSignature pkcs11RsaSignature = new Pkcs11RsaSignature(_libraryPath, _tokenSerial, _tokenLabel, _pin, _ckaLabel, _ckaId, _hashAlgorithm))
+            {
+                List<byte[]> allCerts = pkcs11RsaSignature.GetAllCertificates();
+                Assert.IsTrue(allCerts != null && allCerts.Count > 0);
+
+                bool signingCertFound = false;
+                foreach (byte[] cert in allCerts)
+                {
+                    if (ConvertUtils.BytesToBase64String(cert) == _certificate)
+                    {
+                        signingCertFound = true;
+                        return;
+                    }
+                }
+
+                if (!signingCertFound)
+                    Assert.Fail("Signing certificate is not present in the list of all certificates");
             }
         }
 
@@ -609,13 +607,14 @@ namespace Net.Pkcs11Interop.PDF.Tests
 
                 using (Pkcs11RsaSignature pkcs11RsaSignature = new Pkcs11RsaSignature(_libraryPath, _tokenSerial, _tokenLabel, _pin, _ckaLabel, _ckaId, _hashAlgorithm))
                 {
-                    ICollection<X509Certificate> certificateChain = new List<X509Certificate>();
-                    certificateChain.Add(pkcs11RsaSignature.GetCertificateAsX509Certificate());
+                    byte[] signingCertificate = pkcs11RsaSignature.GetSigningCertificate();
+                    List<byte[]> otherCertificates = pkcs11RsaSignature.GetAllCertificates();
+                    ICollection<X509Certificate> certPath = CertUtils.BuildCertPath(signingCertificate, otherCertificates);
 
                     using (PdfReader pdfReader = new PdfReader(unsignedPdfPath))
                     using (FileStream outputStream = new FileStream(signedPdfPath, FileMode.Create))
                     using (PdfStamper pdfStamper = PdfStamper.CreateSignature(pdfReader, outputStream, '\0', GetTempDocPath(), true))
-                        MakeSignature.SignDetached(pdfStamper.SignatureAppearance, pkcs11RsaSignature, certificateChain, null, null, null, 0, CryptoStandard.CADES);
+                        MakeSignature.SignDetached(pdfStamper.SignatureAppearance, pkcs11RsaSignature, certPath, null, null, null, 0, CryptoStandard.CADES);
                 }
 
                 Assert.IsTrue(1 == VerifySignatureIntegrity(signedPdfPath));
@@ -651,13 +650,14 @@ namespace Net.Pkcs11Interop.PDF.Tests
 
                     using (Pkcs11RsaSignature pkcs11RsaSignature = new Pkcs11RsaSignature(_libraryPath, _tokenSerial, _tokenLabel, _pin, _ckaLabel, _ckaId, _hashAlgorithm))
                     {
-                        ICollection<X509Certificate> certificateChain = new List<X509Certificate>();
-                        certificateChain.Add(pkcs11RsaSignature.GetCertificateAsX509Certificate());
+                        byte[] signingCertificate = pkcs11RsaSignature.GetSigningCertificate();
+                        List<byte[]> otherCertificates = pkcs11RsaSignature.GetAllCertificates();
+                        ICollection<X509Certificate> certPath = CertUtils.BuildCertPath(signingCertificate, otherCertificates);
 
                         using (PdfReader pdfReader = new PdfReader(unsignedPdfPath))
                         using (FileStream outputStream = new FileStream(signedPdfPath, FileMode.Create))
                         using (PdfStamper pdfStamper = PdfStamper.CreateSignature(pdfReader, outputStream, '\0', GetTempDocPath(), true))
-                            MakeSignature.SignDetached(pdfStamper.SignatureAppearance, pkcs11RsaSignature, certificateChain, null, null, null, 0, CryptoStandard.CADES);
+                            MakeSignature.SignDetached(pdfStamper.SignatureAppearance, pkcs11RsaSignature, certPath, null, null, null, 0, CryptoStandard.CADES);
                     }
 
                     Assert.IsTrue(i == VerifySignatureIntegrity(signedPdfPath));
@@ -686,13 +686,14 @@ namespace Net.Pkcs11Interop.PDF.Tests
 
                 using (Pkcs11RsaSignature pkcs11RsaSignature = new Pkcs11RsaSignature(_libraryPath, _tokenSerial, _tokenLabel, _pin, _ckaLabel, _ckaId, _hashAlgorithm))
                 {
-                    ICollection<X509Certificate> certificateChain = new List<X509Certificate>();
-                    certificateChain.Add(pkcs11RsaSignature.GetCertificateAsX509Certificate());
+                    byte[] signingCertificate = pkcs11RsaSignature.GetSigningCertificate();
+                    List<byte[]> otherCertificates = pkcs11RsaSignature.GetAllCertificates();
+                    ICollection<X509Certificate> certPath = CertUtils.BuildCertPath(signingCertificate, otherCertificates);
 
                     using (PdfReader pdfReader = new PdfReader(unsignedPdfPath))
                     using (FileStream outputStream = new FileStream(signedPdfPath, FileMode.Create))
                     using (PdfStamper pdfStamper = PdfStamper.CreateSignature(pdfReader, outputStream, '\0', GetTempDocPath(), true))
-                        MakeSignature.SignDetached(pdfStamper.SignatureAppearance, pkcs11RsaSignature, certificateChain, null, null, null, 0, CryptoStandard.CADES);
+                        MakeSignature.SignDetached(pdfStamper.SignatureAppearance, pkcs11RsaSignature, certPath, null, null, null, 0, CryptoStandard.CADES);
                 }
 
                 Assert.IsTrue(1 == VerifySignatureIntegrity(signedPdfPath));
@@ -712,8 +713,9 @@ namespace Net.Pkcs11Interop.PDF.Tests
         {
             using (Pkcs11RsaSignature pkcs11RsaSignature = new Pkcs11RsaSignature(_libraryPath, _tokenSerial, _tokenLabel, _pin, _ckaLabel, _ckaId, _hashAlgorithm))
             {
-                ICollection<X509Certificate> certificateChain = new List<X509Certificate>();
-                certificateChain.Add(pkcs11RsaSignature.GetCertificateAsX509Certificate());
+                byte[] signingCertificate = pkcs11RsaSignature.GetSigningCertificate();
+                List<byte[]> otherCertificates = pkcs11RsaSignature.GetAllCertificates();
+                ICollection<X509Certificate> certPath = CertUtils.BuildCertPath(signingCertificate, otherCertificates);
 
                 for (int i = 0; i < 100; i++)
                 {
@@ -727,7 +729,7 @@ namespace Net.Pkcs11Interop.PDF.Tests
                         using (PdfReader pdfReader = new PdfReader(unsignedPdfPath))
                         using (FileStream outputStream = new FileStream(signedPdfPath, FileMode.Create))
                         using (PdfStamper pdfStamper = PdfStamper.CreateSignature(pdfReader, outputStream, '\0', GetTempDocPath(), true))
-                            MakeSignature.SignDetached(pdfStamper.SignatureAppearance, pkcs11RsaSignature, certificateChain, null, null, null, 0, CryptoStandard.CADES);
+                            MakeSignature.SignDetached(pdfStamper.SignatureAppearance, pkcs11RsaSignature, certPath, null, null, null, 0, CryptoStandard.CADES);
 
                         Assert.IsTrue(1 == VerifySignatureIntegrity(signedPdfPath));
                     }
