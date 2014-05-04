@@ -49,7 +49,11 @@
     <Compile Include="Doxygen.cs" />
     <Compile Include="HashAlgorithm.cs" />
     <Compile Include="ObjectNotFoundException.cs" />
+    <Compile Include="Certificate.cs" />
+    <Compile Include="Pkcs11Explorer.cs" />
+    <Compile Include="PrivateKey.cs" />
     <Compile Include="Pkcs11RsaSignature.cs" />
+    <Compile Include="Token.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TokenNotFoundException.cs" />
   </ItemGroup>

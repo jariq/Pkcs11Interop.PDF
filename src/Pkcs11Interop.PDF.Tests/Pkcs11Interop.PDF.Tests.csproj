@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CertUtilsTest.cs" />
+    <Compile Include="Pkcs11ExplorerTest.cs" />
     <Compile Include="Pkcs11RsaSignatureExample.cs" />
     <Compile Include="Pkcs11RsaSignatureTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
