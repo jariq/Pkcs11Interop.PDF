@@ -381,7 +381,20 @@ namespace Net.Pkcs11Interop.PDF
             List<Slot> slots = _pkcs11.GetSlotList(true);
             foreach (Slot slot in slots)
             {
-                TokenInfo tokenInfo = slot.GetTokenInfo();
+                TokenInfo tokenInfo = null;
+
+                try
+                {
+                    tokenInfo = slot.GetTokenInfo();
+                }
+                catch (Pkcs11Exception ex)
+                {
+                    if (ex.RV != CKR.CKR_TOKEN_NOT_RECOGNIZED && ex.RV != CKR.CKR_TOKEN_NOT_PRESENT)
+                        throw;
+                }
+
+                if (tokenInfo == null)
+                    continue;
 
                 if (!string.IsNullOrEmpty(tokenSerial))
                     if (0 != String.Compare(tokenSerial, tokenInfo.SerialNumber, StringComparison.InvariantCultureIgnoreCase))
