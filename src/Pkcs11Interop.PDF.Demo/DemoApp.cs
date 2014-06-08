@@ -23,12 +23,12 @@ using iTextSharp.text.pdf.security;
 using Net.Pkcs11Interop.Common;
 using Org.BouncyCastle.Crypto.Parameters;
 
-namespace Net.Pkcs11Interop.PDF.Demo
+namespace Net.Pkcs11Interop.PDF
 {
     /// <summary>
     /// Demonstration application for Pkcs11Interop.PDF library
     /// </summary>
-    static class Program
+    static class DemoApp
     {
         /// <summary>
         /// Exit code indicating success
