@@ -5,11 +5,13 @@ Preparing the testing environment
     an output directory for the tests.
 2.  Import certificate from "John_Doe.p12" file to your PKCS#11 enabled 
     device (smartcard, HSM etc.). Password for the PKCS#12 file is "password".
-3.  Edit variables in Net.Pkcs11Interop.PDF.Tests.Pkcs11RsaSignatureExample 
+3.  Edit variables in Net.Pkcs11Interop.PDF.Tests.Pkcs11ExplorerTest 
+    class stored in Pkcs11ExplorerTest.cs file to suit your needs.
+4.  Edit variables in Net.Pkcs11Interop.PDF.Tests.Pkcs11RsaSignatureExample 
     class stored in Pkcs11RsaSignatureExample.cs file to suit your needs.
-4.  Edit properties in Net.Pkcs11Interop.PDF.Tests.Pkcs11RsaSignatureTest
+5.  Edit properties in Net.Pkcs11Interop.PDF.Tests.Pkcs11RsaSignatureTest
     class stored in Pkcs11RsaSignatureTest.cs file to suit your needs.
-5.  Rebuild and run the tests.
+6.  Rebuild and run the tests.
 
 Converting NUnit test project to Visual Studio UnitTests
 ********************************************************
