@@ -203,9 +203,9 @@ namespace Net.Pkcs11Interop.PDF
 
                     List<ObjectHandle> foundObjects = _session.FindAllObjects(searchTemplate);
                     if (foundObjects.Count < 1)
-                        throw new ObjectNotFoundException(string.Format("Certificate with label \"{0}\" and id \"{1}\" was not found", _ckaLabel, ConvertUtils.BytesToHexString(_ckaId)));
+                        throw new ObjectNotFoundException(string.Format("Certificate with label \"{0}\" and id \"{1}\" was not found", _ckaLabel, (_ckaId == null) ? null : ConvertUtils.BytesToHexString(_ckaId)));
                     else if (foundObjects.Count > 1)
-                        throw new ObjectNotFoundException(string.Format("More than one certificate with label \"{0}\" and id \"{1}\" was found", _ckaLabel, ConvertUtils.BytesToHexString(_ckaId)));
+                        throw new ObjectNotFoundException(string.Format("More than one certificate with label \"{0}\" and id \"{1}\" was found", _ckaLabel, (_ckaId == null) ? null : ConvertUtils.BytesToHexString(_ckaId)));
 
                     List<CKA> attributes = new List<CKA>();
                     attributes.Add(CKA.CKA_VALUE);
@@ -436,9 +436,9 @@ namespace Net.Pkcs11Interop.PDF
 
                 List<ObjectHandle> foundObjects = _session.FindAllObjects(searchTemplate);
                 if (foundObjects.Count < 1)
-                    throw new ObjectNotFoundException(string.Format("Private key with label \"{0}\" and id \"{1}\" was not found", ckaLabel, ConvertUtils.BytesToHexString(ckaId)));
+                    throw new ObjectNotFoundException(string.Format("Private key with label \"{0}\" and id \"{1}\" was not found", ckaLabel, (ckaId == null) ? null : ConvertUtils.BytesToHexString(ckaId)));
                 else if (foundObjects.Count > 1)
-                    throw new ObjectNotFoundException(string.Format("More than one private key with label \"{0}\" and id \"{1}\" was found", ckaLabel, ConvertUtils.BytesToHexString(ckaId)));
+                    throw new ObjectNotFoundException(string.Format("More than one private key with label \"{0}\" and id \"{1}\" was found", ckaLabel, (ckaId == null) ? null : ConvertUtils.BytesToHexString(ckaId)));
 
                 return foundObjects[0];
             }
