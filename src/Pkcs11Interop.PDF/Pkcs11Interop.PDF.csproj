@@ -38,9 +38,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\iTextSharp.5.5.0\lib\itextsharp.dll</HintPath>
     </Reference>
-    <Reference Include="Pkcs11Interop, Version=2.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Pkcs11Interop.2.0.1.1\lib\net20\Pkcs11Interop.dll</HintPath>
+    <Reference Include="Pkcs11Interop, Version=3.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Pkcs11Interop.3.2.0\lib\net20\Pkcs11Interop.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
   </ItemGroup>
