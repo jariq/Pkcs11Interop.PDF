@@ -1,6 +1,8 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual C# Express 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pkcs11Interop.PDF", "Pkcs11Interop.PDF\Pkcs11Interop.PDF.csproj", "{CCBEEB39-79A9-43FC-A4D7-19D67B705424}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pkcs11Interop.PDF.Tests", "Pkcs11Interop.PDF.Tests\Pkcs11Interop.PDF.Tests.csproj", "{E1DC5F1A-CF69-44E9-B59D-239CB5F65223}"
