@@ -64,7 +64,7 @@ namespace Net.Pkcs11Interop.PDF.Tests
         /// <summary>
         /// Hex encoded string with identifier (value of CKA_ID attribute) of the private key used for signing. May be null if ckaLabel is specified.
         /// </summary>
-        public const string _ckaId = @"EC5E50A889B888D600C6E13CB0FDF0C1";
+        public const string _ckaId = @"73006233654C4C88A21555CC882AFA58";
 
         /// <summary>
         /// Hash algorihtm used for the signature creation
@@ -79,7 +79,7 @@ namespace Net.Pkcs11Interop.PDF.Tests
         /// <summary>
         /// Signing certificate present on the token
         /// </summary>
-        public const string _certificate = @"MIIDOzCCAiOgAwIBAgIBATANBgkqhkiG9w0BAQsFADBCMQswCQYDVQQGEwJTSzEgMB4GA1UEChMXUGtjczExSW50ZXJvcC5QREYuVGVzdHMxETAPBgNVBAMTCEpvaG4gRG9lMB4XDTEzMDUxODAwMDAwMFoXDTIzMDUxNzIzNTk1OVowQjELMAkGA1UEBhMCU0sxIDAeBgNVBAoTF1BrY3MxMUludGVyb3AuUERGLlRlc3RzMREwDwYDVQQDEwhKb2huIERvZTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBANhZegZNMKv1XKQTaif5o33leIDBiCgFNhqP0eDFlvGeLrESnh3GArbx+zMNSfPsfnqIfrcLvKTGR32HrLogKGCXaVBGN0nIV/o3iHNApROGOY+ekWQAOMfAvUDngYTGx340kwjPyRWmbCjxFY5jxRL3Npv9Dg8y4LBshGARY7JKqrSmpY1WPr9vEQcIox9HS/u9D51ZjB4kuvL5tnQh6pQeiOv94mAMK6+7nwSJFPUopqhb13qHfZytWepEJ6bfbOZZ4kwU9YSyH9R5V48UyfJhc0lFK5CNSbSCyl87qvUnhbSszPTEsL94dyy7bDVf8f1nMkyol63mAOQVGbC5pysCAwEAAaM8MDowDAYDVR0TAQH/BAIwADAdBgNVHQ4EFgQUaMyotFLpVmy/5ldpUq7mwivA3pQwCwYDVR0PBAQDAgeAMA0GCSqGSIb3DQEBCwUAA4IBAQBfhTjRrwqS0ShZWV17QAggM2PxHf/UCtdO8hBScWzh0CZy0uSElGz23q532kmaO1iZyng976RRX15TU6br1nAoI7OCvvfliVfxl5/ahW5U9VOKgVz2OKp6a6rRcpIiDRrDgohY+ffKOnCAdPyDYw0QYoNYXNarEdPTDrTyjP57HgHMTYBS26HyRDLt1jMxDkUBihMZ8/QmbYNF9MS3Xq9TCyHUaHnEr4tw10whNkSnFrhShhOCQmMBX991LPRejkMyYLfYQz12+7KAOQZEcda6mfNe/H96hXIjfmUNYQ7QAIOMmiES9tKBqUElkZE7LNyVClzZVJyPdAWoJa6lyu+Y";
+        public const string _certificate = @"MIIDPTCCAiWgAwIBAgIBATANBgkqhkiG9w0BAQsFADBCMQswCQYDVQQGEwJTSzEgMB4GA1UEChMXUGtjczExSW50ZXJvcC5QREYuVGVzdHMxETAPBgNVBAMTCEpvaG4gRG9lMCAXDTE2MDEwMTAwMDAwMFoYDzIxMTUxMjMxMjM1OTU5WjBCMQswCQYDVQQGEwJTSzEgMB4GA1UEChMXUGtjczExSW50ZXJvcC5QREYuVGVzdHMxETAPBgNVBAMTCEpvaG4gRG9lMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAzDP73KjmePdxPuDCWzZDeelfY1UZfFRxTqHkf3VGNY4ah3T+p6PResyh72O+MgItwCKec3nCctuw836a+iojqvdePbbZXRSLx31+vlBRwHPfzGiRMQmuQQm9+1xv3Il1CKd2FAA4dAlfFLubaBopdYTSOKDmvvdFGRax74lFDHUE6g7NaP2n644notb5aHj/5lOYx/VUicSJahVVVpHaQN7hKwTCnAmx9yr32j0rwxlvbzxGgaWATadJaRmbGNW52p+iWhNgOUxJlC3LHJZNBvzi8BIW/i0RYp6u+8HXUDgw+djuqcroA2vGi4Ns/F26elc87nFepdJA4QnsnQyTlwIDAQABozwwOjAMBgNVHRMBAf8EAjAAMB0GA1UdDgQWBBTKh4hjBUe7fVeIbiBvKwT+0vMOTjALBgNVHQ8EBAMCBLAwDQYJKoZIhvcNAQELBQADggEBAKriwcNMJ40NxTfyOlCJ/YbTFur0EWLQnS1sSkpDkbm5Egm+HuCZrX3aTl+AoGOAHFTwetHJZc7CxwlBT12sKV8P6jUXrqnpNOI6u6BMAvDL9LO5BQN4IEDKKm+UIaKxltVjIB0yiK1e8g5MgXXAGnDLgr1BoDf7U06/FQ+TX1Kru/+LR+vnJcaUSzYppK3LPdBEcoXoeTHEXa6WDZPn7qa2BsLFiXGin3HEBchiD/gC2Ydv/DNgVAXnSSmQYZUI9nuiiHiUu5SWW0+9Mu8UD7MSpIxFl5QNHY5l0NdO8w1p5bzcHZIAso9nS+7Jdlv/rxe7lfHfl7cm7/HWROkzR9Q=";
 
         /// <summary>
         /// Path to the temporary directory used by these tests
@@ -109,8 +109,7 @@ namespace Net.Pkcs11Interop.PDF.Tests
             }
             catch (Exception ex)
             {
-                if (Platform.IsWindows)
-                    Assert.IsTrue(ex is Win32Exception);
+                Assert.IsTrue(ex is UnmanagedException);
             }
 
             // Unspecified PKCS#11 library
@@ -322,7 +321,7 @@ namespace Net.Pkcs11Interop.PDF.Tests
                 byte[] signature = pkcs11RsaSignature.Sign(ConvertUtils.Utf8StringToBytes("Hello world"));
                 Assert.IsTrue(pkcs11RsaSignature.GetEncryptionAlgorithm() == "RSA");
                 Assert.IsTrue(pkcs11RsaSignature.GetHashAlgorithm() == "SHA1");
-                Assert.IsTrue(ConvertUtils.BytesToBase64String(signature) == @"pJ2lelg6SscFTbweImgT25KSblMQa1GgyJZSXwWU+M6vt/n8oApLRHNrw5pvGRZU9iOWi1BXp61VBVLYHS5ABhsBsdRw2/GzEkM0seDje4Q+sx9VKwDIgg6rbkgk+r/tYXjr+95d0kI+GRlELxR6FiQa61OGuSupIRm4Nv58iYN/WNwfvoBjHFNouQPnRC5/79/tehv9uMl2lGkvIl25R7ESjvzDI69b62VwDVFhy+/Jwaru8XDPqpOruFvHtgCFtzhb5yUxG/Lxi3I0Fii9ld1YsrOLLCqPCumjLYmfmSD/nnVMMnxjbzoUadA0uIc8HGXQRkZ+zFZZb8WukXbbMQ==");
+                Assert.IsTrue(ConvertUtils.BytesToBase64String(signature) == @"ANaql6sPuTp25Is2V6boFuTwIrBJ7eiM+z4OxcfHIHWiQ1SnBGfpFFdXfnpklTdwYenRpFxaHW6KlNYEIRk9Jkc0ZAJI83QYMmB99mdbnFLxVWqfpO9+41nOv08oe1RZxLp69pWUF0W1yFPwWmB/azH1x3wLkQlLTmxfCo7IEA7v+wlWZn5OosLVL2RjHMAKEcLBbcz9GuEC+BFAiFGRQCVZhWH0k5BgL38cG+Y0PMo+NH2LQy9Hh0neC+3VsQpQgHJM7n5H0/ck1Oay5jSv29I+PoiUMCmEg6txjElYvsrGEB6GwCuO1o5TwjqlADi+KeKqiH3BsIrTS0NTejLW9Q==");
             }
         }
 
@@ -337,7 +336,7 @@ namespace Net.Pkcs11Interop.PDF.Tests
                 byte[] signature = pkcs11RsaSignature.Sign(ConvertUtils.Utf8StringToBytes("Hello world"));
                 Assert.IsTrue(pkcs11RsaSignature.GetEncryptionAlgorithm() == "RSA");
                 Assert.IsTrue(pkcs11RsaSignature.GetHashAlgorithm() == "SHA256");
-                Assert.IsTrue(ConvertUtils.BytesToBase64String(signature) == @"rp2lDiHzzru8dUTs6Gr0JpaJ1XdHTcSLHjourbDcV84vSGjNtaO3T+fBlq0zoTihnjpoGnZxHDVXTRLSCrWv+EEPrUVLF1UdMeJ6k50i7YZCK3S+caUEdQlH1kWzsMrvm40TTuyQ7a0nRImBB44wpKDir2bjvNaR45ZkTDbfqUZFjfhVena2+EattXANcyoxOiq9P1OjMVbVE4kyNmaJQ3p67E60UrrLnHZbZcMakhmewc3lGFGs0BpORJ7iwSGMH+8sT1ZhRoBi1Ra0gzumCFlSFcB/b85orDitGJHbyNDJu+FzbuzUgFgxM8u4f102hp6h/w7xwZMB2wkrLb5wbA==");
+                Assert.IsTrue(ConvertUtils.BytesToBase64String(signature) == @"TL4ZfPMONv5EFO1cI8ni8YuOkPB/0XXjCQPSHH7r3NejQpNCWD0P4OHRIIYYOMYjJwwRbstS+zX5YigR7Wo8j3OrNs5/H3e9k0OcIidM4WFVz7h5frMmaLo+kbVwnA8zGAaYiXAxgQGHH1Qr31pYkVifWx6/Wq+/J4iKVLXFr25mrIwg/Ccfar587HMi3KzPYYNtKIglkqTTTqrzxBv+VW9Ty2TB+YbTJ/3FsBz6+PWHLPCrECizvCKZyT56EOj6QkJ6bZSMt6N42ng187ZgnatwjYJd3HitX146qNpoR5Hp2yjPSBgxxww/U66O2v1SQV1fBz/bGpQ/t6JLODkAmA==");
             }
         }
 
@@ -352,7 +351,7 @@ namespace Net.Pkcs11Interop.PDF.Tests
                 byte[] signature = pkcs11RsaSignature.Sign(ConvertUtils.Utf8StringToBytes("Hello world"));
                 Assert.IsTrue(pkcs11RsaSignature.GetEncryptionAlgorithm() == "RSA");
                 Assert.IsTrue(pkcs11RsaSignature.GetHashAlgorithm() == "SHA384");
-                Assert.IsTrue(ConvertUtils.BytesToBase64String(signature) == @"cyO/5SArMSV8zs4u747/+OEgOociqSqs0OU05OdVWAQI4e+YQxiNfDMJaeIGsFbcnhuOvJeBOo8TFgvNhncPz9LwFuNw6fWaCuXdtLB+Ewh2H/xhURGAZxbmXYHKs8TRwEDAGbuY9rkglBzuijLxSsc202Cf0Ym8jnAKkgwpcTFYgDnNcm857ZNxQ35UinqqxjvZOEpBdej3+9jwyDFsTQ6en5z/S7tDwnGe6C7uuIU6sXKn4ydTjp/HndVRiTQwTHMgKJF4V3K1yOYX/aFocIchd2ergLE5WrRJT8PwfDRupoHzSd8LREFmN8Z+nqv17Adfpm6rcVDG0ZluismlIA==");
+                Assert.IsTrue(ConvertUtils.BytesToBase64String(signature) == @"cuI+JqxscNrX1ZK/PtyTTJmWsRttSivokif2RkbhiAcgXS/6VxDGup83BGMwy+Yttv9miqrPY/dp0GB4TcAbWoYsXhKB+zTs3BlCAvHrDobpvz/wkhLry7AsAjCFUt9ax2ySfAU3PyUkKRkD2WwlDV3DVwAdKZhfkElL8ocYfoAod5u2X8/78HDVod9umUf8Yj1MI0xPdtaOTO1YLWS3Pd9TgXI0IuzbtY/QYO79PVaaalzZYROIy+kwJkkE/N9nQMRg2BVxSEvkd29/Vv98Z/OMDDVFga26BsYhhS9KUw8lKnk7qk7QvSKbPDvhQmTMwNfL++Yi2E4Df8bVk2O1JA==");
             }
         }
 
@@ -367,7 +366,7 @@ namespace Net.Pkcs11Interop.PDF.Tests
                 byte[] signature = pkcs11RsaSignature.Sign(ConvertUtils.Utf8StringToBytes("Hello world"));
                 Assert.IsTrue(pkcs11RsaSignature.GetEncryptionAlgorithm() == "RSA");
                 Assert.IsTrue(pkcs11RsaSignature.GetHashAlgorithm() == "SHA512");
-                Assert.IsTrue(ConvertUtils.BytesToBase64String(signature) == @"i/0If7M+T2eEbO/VNoV37ikIMDbs88//svdcsC3qfCc1cvjcbXrcojwY07rQaQfbpguQAbUi2OtNHLRgjaPhag3Zo4PczNVtmhHxWLeo0LTqpDd9+6N75HNIvV18RD1f1ms5Dw2LKWxz6KiZCJGWH7yB7qgbYx1YJeqhaGtFgxOdjbPn/R32ch0PDYAY9oAAkVejGW9xaVl1hspNRBOkhQag4MumI0icmKoDkqpLXzUg1XleTTY563xGm3Q+f6YrwQ+W1HeYRpp2LdEG6azStTi/FM8Mr5TAh2Xmm4v9EavKe6xzd+avuP2KViwRFrRHMYu6Xn1kVOIG7knAa1ZsAg==");
+                Assert.IsTrue(ConvertUtils.BytesToBase64String(signature) == @"nfTYFqxGibgo6Gf5I9AYSVIHyZrCCN1xS8QQkaWVx1JE6pJS0p4urlDTE5RshYBNQ1xxoxTzKpKk5z1TBj0Bzmx0lvhjFpMELW/47xxkYNeBMbfauIIKy2wjvIAlZ1STEGOc622tyPNC9XS9phiJpnmtzOLzetIMwJM+/xCyqLWZmRPilE2luu63w2b60vnfHKSDFeeqtxCd5vvkXsp8iz1A2xLxqEVVrCyQR9qJMAKT5KrApuEHxTLuqqBPO9jV4oFoAu2a+nFlTXk//aU0YfDqsTBeuf2DzhnLAajV3wdCTuKxMlR6jhzXwANLvcq5N8L1Fr7gfj9VX/tuRfNgEw==");
             }
         }
 

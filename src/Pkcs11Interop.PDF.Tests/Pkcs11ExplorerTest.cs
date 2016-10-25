@@ -56,7 +56,7 @@ namespace Net.Pkcs11Interop.PDF.Tests
         /// <summary>
         /// Hex encoded string with identifier (value of CKA_ID attribute) of the private key used for signing. May be null if ckaLabel is specified.
         /// </summary>
-        public const string _ckaId = @"EC5E50A889B888D600C6E13CB0FDF0C1";
+        public const string _ckaId = @"73006233654C4C88A21555CC882AFA58";
 
         /// <summary>
         /// Incorrect string
@@ -84,8 +84,7 @@ namespace Net.Pkcs11Interop.PDF.Tests
             }
             catch (Exception ex)
             {
-                if (Platform.IsWindows)
-                    Assert.IsTrue(ex is Win32Exception);
+                Assert.IsTrue(ex is UnmanagedException);
             }
 
             // Unspecified PKCS#11 library
