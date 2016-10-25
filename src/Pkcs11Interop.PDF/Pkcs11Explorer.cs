@@ -48,7 +48,17 @@ namespace Net.Pkcs11Interop.PDF
             if (string.IsNullOrEmpty(libraryPath))
                 throw new ArgumentNullException("libraryPath");
 
-            _pkcs11 = new Pkcs11(libraryPath, true);
+            try
+            {
+                _pkcs11 = new Pkcs11(libraryPath, true);
+            }
+            catch (Pkcs11Exception ex)
+            {
+                if (ex.RV == CKR.CKR_CANT_LOCK)
+                    _pkcs11 = new Pkcs11(libraryPath, false);
+                else
+                    throw;
+            }
         }
 
         /// <summary>
