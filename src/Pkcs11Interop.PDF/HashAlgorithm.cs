@@ -1,7 +1,7 @@
 /*
  *  Pkcs11Interop.PDF - Integration layer for Pkcs11Interop 
  *                      and iText (iTextSharp) libraries
- *  Copyright (c) 2013-2014 JWC s.r.o. <http://www.jwc.sk>
+ *  Copyright (c) 2013-2016 JWC s.r.o. <http://www.jwc.sk>
  *  Author: Jaroslav Imrich <jimrich@jimrich.sk>
  *
  *  Licensing for open source projects:

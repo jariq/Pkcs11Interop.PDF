@@ -9,8 +9,8 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescription("Integration layer for Pkcs11Interop and iText (iTextSharp) libraries")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("JWC s.r.o.")]
-[assembly: AssemblyProduct("Pkcs11Interop.PDF (AGPL)")]
-[assembly: AssemblyCopyright("Copyright © 2013-2014 JWC s.r.o. All Rights Reserved.")]
+[assembly: AssemblyProduct("Pkcs11Interop.PDF")]
+[assembly: AssemblyCopyright("Copyright © 2013-2016 JWC s.r.o. All Rights Reserved.")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
