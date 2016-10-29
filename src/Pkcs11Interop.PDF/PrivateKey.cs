@@ -15,6 +15,8 @@
  */
 
 using Org.BouncyCastle.Crypto;
+using System.Security.Cryptography.X509Certificates;
+using BCX509 = Org.BouncyCastle.X509;
 
 namespace Net.Pkcs11Interop.PDF
 {
@@ -82,6 +84,51 @@ namespace Net.Pkcs11Interop.PDF
             _id = id;
             _label = label;
             _publicKey = publicKey;
+        }
+
+        /// <summary>
+        /// Checks whether specified certificate matches this private key
+        /// </summary>
+        /// <param name="certificate">Certificate to be checked</param>
+        /// <returns>Null if match cannot be performed, true if certificate matches, false otherwise</returns>
+        public bool? Matches(Certificate certificate)
+        {
+            if (certificate == null || certificate.PublicKey == null)
+                return null;
+
+            if (this.PublicKey == null)
+                return null;
+
+            return this.PublicKey.Equals(certificate.PublicKey);
+        }
+
+        /// <summary>
+        /// Checks whether specified certificate matches this private key
+        /// </summary>
+        /// <param name="certificate">Certificate to be checked</param>
+        /// <returns>Null if match cannot be performed, true if certificate matches, false otherwise</returns>
+        public bool? Matches(BCX509.X509Certificate certificate)
+        {
+            if (certificate == null)
+                return null;
+
+            if (this.PublicKey == null)
+                return null;
+
+            return this.PublicKey.Equals(certificate.GetPublicKey());
+        }
+
+        /// <summary>
+        /// Checks whether specified certificate matches this private key
+        /// </summary>
+        /// <param name="certificate">Certificate to be checked</param>
+        /// <returns>Null if match cannot be performed, true if certificate matches, false otherwise</returns>
+        public bool? Matches(X509Certificate2 certificate)
+        {
+            if (certificate == null)
+                return null;
+
+            return Matches(CertUtils.ToBouncyCastleObject(certificate));
         }
     }
 }

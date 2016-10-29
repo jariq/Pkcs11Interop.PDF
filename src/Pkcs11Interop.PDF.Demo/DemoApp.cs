@@ -291,7 +291,11 @@ namespace Net.Pkcs11Interop.PDF
                         foreach (PrivateKey privateKey in privateKeys)
                         {
                             Console.WriteLine();
-                            Console.WriteLine("Private key no." + j);
+                            Console.WriteLine("Private key #" + j);
+
+                            int[] matchingCertIds = GetMatchingCertIds(privateKey, certificates);
+                            Console.WriteLine("  Matching certs:     " + PrintMatchingIds(matchingCertIds));
+
                             Console.WriteLine("  ID (CKA_ID):        " + privateKey.Id);
                             Console.WriteLine("  Label (CKA_LABEL):  " + privateKey.Label);
 
@@ -310,10 +314,14 @@ namespace Net.Pkcs11Interop.PDF
                         int k = 1;
                         foreach (Certificate certificate in certificates)
                         {
+                            Console.WriteLine();
+                            Console.WriteLine("Certificate #" + k);
+
+                            int[] matchingKeyIds = GetMatchingKeyIds(certificate, privateKeys);
+                            Console.WriteLine("  Matching keys:      " + PrintMatchingIds(matchingKeyIds));
+
                             X509Certificate2 x509Cert = CertUtils.ToDotNetObject(certificate.Data);
 
-                            Console.WriteLine();
-                            Console.WriteLine("Certificate no." + k);
                             Console.WriteLine("  ID (CKA_ID):        " + certificate.Id);
                             Console.WriteLine("  Label (CKA_LABEL):  " + certificate.Label);
                             Console.WriteLine("  Serial number:      " + x509Cert.SerialNumber);
@@ -401,6 +409,74 @@ namespace Net.Pkcs11Interop.PDF
             }
 
             Environment.Exit(_exitSuccess);
+        }
+
+        /// <summary>
+        /// Identifies certificates matching specified private key
+        /// </summary>
+        /// <param name="privateKey">Private key</param>
+        /// <param name="certificates">Certificates that should be analyzed</param>
+        /// <returns>Indexes of matching certificates</returns>
+        static int[] GetMatchingCertIds(PrivateKey privateKey, List<Certificate> certificates)
+        {
+            List<int> indexes = new List<int>();
+
+            int i = 1;
+
+            foreach (Certificate certificate in certificates)
+            {
+                bool? matches = privateKey.Matches(certificate);
+
+                if (matches.HasValue && matches.Value == true)
+                    indexes.Add(i);
+
+                i++;
+            }
+
+            return indexes.ToArray();
+        }
+
+        /// <summary>
+        /// Identifies private keys matching specified certificate
+        /// </summary>
+        /// <param name="certificate">Certificate</param>
+        /// <param name="privateKeys">Private keys that should be analyzed</param>
+        /// <returns>Indexes of matching private keys</returns>
+        static int[] GetMatchingKeyIds(Certificate certificate, List<PrivateKey> privateKeys)
+        {
+            List<int> indexes = new List<int>();
+
+            int i = 1;
+
+            foreach (PrivateKey privateKey in privateKeys)
+            {
+                bool? matches = certificate.Matches(privateKey);
+
+                if (matches.HasValue && matches.Value == true)
+                    indexes.Add(i);
+
+                i++;
+            }
+
+            return indexes.ToArray();
+        }
+
+        /// <summary>
+        /// Converts indexes of matching objects to a printable form
+        /// </summary>
+        /// <param name="ids">Indexes of matching objects</param>
+        /// <returns>Printable form of matching objects indexes</returns>
+        static string PrintMatchingIds(int[] ids)
+        {
+            if (ids == null || ids.Length < 1)
+                return "None";
+
+            string output = null;
+
+            foreach (int id in ids)
+                output = "#" + id.ToString() + " ";
+
+            return output;
         }
 
         /// <summary>
