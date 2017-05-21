@@ -15749,6 +15749,10 @@
         <member name="F:iTextSharp.text.pdf.parser.ImageRenderInfo.imageObject">
             the image object to be rendered, if it has been parsed already.  Null otherwise. 
         </member>
+        <member name="F:iTextSharp.text.pdf.parser.ImageRenderInfo.markedContentInfos">
+            Array containing marked content info for the text.
+            @since 5.5.11
+        </member>
         <member name="M:iTextSharp.text.pdf.parser.ImageRenderInfo.CreateForXObject(iTextSharp.text.pdf.parser.GraphicsState,iTextSharp.text.pdf.PdfIndirectReference,iTextSharp.text.pdf.PdfDictionary)">
             Create an ImageRenderInfo object based on an XObject (this is the most common way of including an image in PDF)
             @param ctm the coordinate transformation matrix at the time the image is rendered
@@ -15756,7 +15760,14 @@
             @return the ImageRenderInfo representing the rendered XObject
             @since 5.0.1
         </member>
-        <member name="M:iTextSharp.text.pdf.parser.ImageRenderInfo.CreateForEmbeddedImage(iTextSharp.text.pdf.parser.GraphicsState,iTextSharp.text.pdf.parser.InlineImageInfo,iTextSharp.text.pdf.PdfDictionary)">
+        <member name="M:iTextSharp.text.pdf.parser.ImageRenderInfo.CreateForXObject(iTextSharp.text.pdf.parser.GraphicsState,iTextSharp.text.pdf.PdfIndirectReference,iTextSharp.text.pdf.PdfDictionary,System.Collections.ICollection)">
+            Create an ImageRenderInfo object based on an XObject (this is the most common way of including an image in PDF)
+            @param ctm the coordinate transformation matrix at the time the image is rendered
+            @param ref a reference to the image XObject
+            @return the ImageRenderInfo representing the rendered XObject
+            @since 5.0.1
+        </member>
+        <member name="M:iTextSharp.text.pdf.parser.ImageRenderInfo.CreateForEmbeddedImage(iTextSharp.text.pdf.parser.GraphicsState,iTextSharp.text.pdf.parser.InlineImageInfo,iTextSharp.text.pdf.PdfDictionary,System.Collections.ICollection)">
             Create an ImageRenderInfo object based on inline image data.  This is nowhere near completely thought through
             and really just acts as a placeholder.
             @param ctm the coordinate transformation matrix at the time the image is rendered
@@ -15786,6 +15797,24 @@
         <member name="M:iTextSharp.text.pdf.parser.ImageRenderInfo.GetCurrentFillColor">
             @return the current fill color from the graphics state at the time this render operation occured
             @since 5.5.7
+        </member>
+        <member name="M:iTextSharp.text.pdf.parser.ImageRenderInfo.HasMcid(System.Int32)">
+            Checks if the image belongs to a marked content sequence
+            with a given mcid.
+            @param mcid a marked content id
+            @return true if the text is marked with this id
+            @since 5.5.11
+        </member>
+        <member name="M:iTextSharp.text.pdf.parser.ImageRenderInfo.HasMcid(System.Int32,System.Boolean)">
+            	     * Checks if the image belongs to a marked content sequence
+            	     * with a given mcid.
+                     * @param mcid a marked content id
+                     * @param checkTheTopmostLevelOnly indicates whether to check the topmost level of marked content stack only
+                     * @return true if the text is marked with this id
+                     * @since 5.5.11
+        </member>
+        <member name="M:iTextSharp.text.pdf.parser.ImageRenderInfo.GetMcid">
+            @return the marked content associated with the ImageRenderInfo instance.
         </member>
         <member name="T:iTextSharp.text.pdf.parser.LineSegment">
             Represents a line segment in a particular coordinate system.  This class is immutable.
@@ -26223,7 +26252,7 @@
         </member>
         <member name="M:iTextSharp.text.pdf.PdfStructureElement.#ctor(iTextSharp.text.pdf.PdfStructureTreeRoot,iTextSharp.text.pdf.PdfName)">
             Creates a new instance of PdfStructureElement.
-            @param parent the parent of this node
+            @param root the structure tree root
             @param structureType the type of structure. It may be a standard type or a user type mapped by the role map
         </member>
         <member name="M:iTextSharp.text.pdf.PdfStructureElement.GetAttribute(iTextSharp.text.pdf.PdfName)">
