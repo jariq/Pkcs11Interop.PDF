@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("JWC s.r.o.")]
 [assembly: AssemblyProduct("Pkcs11Interop.PDF")]
-[assembly: AssemblyCopyright("Copyright © 2013-2016 JWC s.r.o. All Rights Reserved.")]
+[assembly: AssemblyCopyright("Copyright © 2013-2017 JWC s.r.o. All Rights Reserved.")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

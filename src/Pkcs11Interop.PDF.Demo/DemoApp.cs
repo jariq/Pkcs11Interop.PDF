@@ -1,7 +1,7 @@
 ﻿/*
  *  Pkcs11Interop.PDF.Demo - Demonstration application
  *                           for Pkcs11Interop.PDF library
- *  Copyright (c) 2013-2016 JWC s.r.o. <http://www.jwc.sk>
+ *  Copyright (c) 2013-2017 JWC s.r.o. <http://www.jwc.sk>
  *  Author: Jaroslav Imrich <jimrich@jimrich.sk>
  *
  *  Licensing for open source projects:
@@ -488,7 +488,7 @@ namespace Net.Pkcs11Interop.PDF
             if (string.IsNullOrEmpty(error))
             {
                 Console.WriteLine(@"Demonstration application for Pkcs11Interop.PDF library");
-                Console.WriteLine(@"Copyright (c) 2013-2016 JWC s.r.o. <http://www.jwc.sk>");
+                Console.WriteLine(@"Copyright (c) 2013-2017 JWC s.r.o. <http://www.jwc.sk>");
                 Console.WriteLine(@"Author: Jaroslav Imrich <jimrich@jimrich.sk>");
                 Console.WriteLine();
             }
