@@ -1,9 +1,77 @@
 <?xml version="1.0"?>
 <doc>
     <assembly>
-        <name>Pkcs11Interop.Silverlight</name>
+        <name>Pkcs11Interop.iOS</name>
     </assembly>
     <members>
+        <member name="T:Net.Pkcs11Interop.Common.AttributeValueException">
+            <summary>
+            Exception with the name of PKCS#11 attribute whose value could not be read or converted
+            </summary>
+        </member>
+        <member name="F:Net.Pkcs11Interop.Common.AttributeValueException._attribute">
+            <summary>
+            Attribute whose value could not be read or converted
+            </summary>
+        </member>
+        <member name="P:Net.Pkcs11Interop.Common.AttributeValueException.Attribute">
+            <summary>
+            Attribute whose value could not be read or converted
+            </summary>
+        </member>
+        <member name="M:Net.Pkcs11Interop.Common.AttributeValueException.#ctor(Net.Pkcs11Interop.Common.CKA)">
+            <summary>
+            Initializes new instance of AttributeValueException class
+            </summary>
+            <param name="attribute">Attribute whose value could not be read or converted</param>
+        </member>
+        <member name="M:Net.Pkcs11Interop.Common.AttributeValueException.#ctor(Net.Pkcs11Interop.Common.CKA,System.Exception)">
+            <summary>
+            Initializes a new instance of AttributeValueException class with a reference to the inner exception that is the cause of this exception
+            </summary>
+            <param name="attribute">Attribute whose value could not be read or converted</param>
+            <param name="innerException">The exception that is the cause of the current exception</param>
+        </member>
+        <member name="M:Net.Pkcs11Interop.Common.AttributeValueException.#ctor(System.UInt32)">
+            <summary>
+            Initializes new instance of AttributeValueException class
+            </summary>
+            <param name="attribute">Attribute whose value could not be read or converted</param>
+        </member>
+        <member name="M:Net.Pkcs11Interop.Common.AttributeValueException.#ctor(System.UInt32,System.Exception)">
+            <summary>
+            Initializes a new instance of AttributeValueException class with a reference to the inner exception that is the cause of this exception
+            </summary>
+            <param name="attribute">Attribute whose value could not be read or converted</param>
+            <param name="innerException">The exception that is the cause of the current exception</param>
+        </member>
+        <member name="M:Net.Pkcs11Interop.Common.AttributeValueException.#ctor(System.UInt64)">
+            <summary>
+            Initializes new instance of AttributeValueException class
+            </summary>
+            <param name="attribute">Attribute whose value could not be read or converted</param>
+        </member>
+        <member name="M:Net.Pkcs11Interop.Common.AttributeValueException.#ctor(System.UInt64,System.Exception)">
+            <summary>
+            Initializes a new instance of AttributeValueException class with a reference to the inner exception that is the cause of this exception
+            </summary>
+            <param name="attribute">Attribute whose value could not be read or converted</param>
+            <param name="innerException">The exception that is the cause of the current exception</param>
+        </member>
+        <member name="M:Net.Pkcs11Interop.Common.AttributeValueException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Initializes new instance of AttributeValueException class with serialized data
+            </summary>
+            <param name="info">SerializationInfo that holds the serialized object data about the exception being thrown</param>
+            <param name="context">StreamingContext that contains contextual information about the source or destination</param>
+        </member>
+        <member name="M:Net.Pkcs11Interop.Common.AttributeValueException.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Populates a SerializationInfo with the data needed to serialize the target object
+            </summary>
+            <param name="info">SerializationInfo to populate with data</param>
+            <param name="context">The destination for this serialization</param>
+        </member>
         <member name="T:Net.Pkcs11Interop.Common.CK">
             <summary>
             General constants
@@ -3164,6 +3232,13 @@
             </summary>
             <param name="message">Message that describes the error</param>
         </member>
+        <member name="M:Net.Pkcs11Interop.Common.ElevatedPermissionsMissingException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Initializes new instance of ElevatedPermissionsMissingException class with serialized data
+            </summary>
+            <param name="info">SerializationInfo that holds the serialized object data about the exception being thrown</param>
+            <param name="context">StreamingContext that contains contextual information about the source or destination</param>
+        </member>
         <member name="T:Net.Pkcs11Interop.Common.IMechanismParams">
             <summary>
             Interface for mechanism parameters
@@ -3204,6 +3279,13 @@
             <param name="message">The message that describes the error</param>
             <param name="innerException">The exception that is the cause of the current exception</param>
         </member>
+        <member name="M:Net.Pkcs11Interop.Common.LibraryArchitectureException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Initializes new instance of LibraryArchitectureException class with serialized data
+            </summary>
+            <param name="info">SerializationInfo that holds the serialized object data about the exception being thrown</param>
+            <param name="context">StreamingContext that contains contextual information about the source or destination</param>
+        </member>
         <member name="T:Net.Pkcs11Interop.Common.NativeMethods">
             <summary>
             Imported native methods
@@ -3235,31 +3317,6 @@
             <param name="hModule">A handle to the DLL module that contains the function or variable.</param>
             <param name="lpProcName">The function or variable name, or the function's ordinal value.</param>
             <returns>If the function succeeds, the return value is the address of the exported function or variable. If the function fails, the return value is NULL.</returns>
-        </member>
-        <member name="F:Net.Pkcs11Interop.Common.NativeMethods.LMEM_FIXED">
-            <summary>
-            Allocates fixed memory
-            </summary>
-        </member>
-        <member name="F:Net.Pkcs11Interop.Common.NativeMethods.LMEM_ZEROINIT">
-            <summary>
-            Initializes memory contents to zero
-            </summary>
-        </member>
-        <member name="M:Net.Pkcs11Interop.Common.NativeMethods.LocalAlloc(System.Int32,System.UIntPtr)">
-            <summary>
-            Allocates the specified number of bytes from the heap
-            </summary>
-            <param name="uFlags">The memory allocation attributes</param>
-            <param name="uBytes">The number of bytes to allocate</param>
-            <returns>If the function succeeds, the return value is a handle to the newly allocated memory object. If the function fails, the return value is NULL.</returns>
-        </member>
-        <member name="M:Net.Pkcs11Interop.Common.NativeMethods.LocalFree(System.IntPtr)">
-            <summary>
-            Frees the specified local memory object and invalidates its handle
-            </summary>
-            <param name="hMem">A handle to the local memory object</param>
-            <returns>If the function succeeds, the return value is NULL. If the function fails, the return value is equal to a handle to the local memory object.</returns>
         </member>
         <member name="F:Net.Pkcs11Interop.Common.NativeMethods.RTLD_NOW_LINUX">
             <summary>
@@ -3348,6 +3405,20 @@
             </summary>
             <param name="method">Name of method that caused exception</param>
             <param name="rv">Return value of method that caused exception</param>
+        </member>
+        <member name="M:Net.Pkcs11Interop.Common.Pkcs11Exception.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Initializes new instance of Pkcs11Exception class with serialized data
+            </summary>
+            <param name="info">SerializationInfo that holds the serialized object data about the exception being thrown</param>
+            <param name="context">StreamingContext that contains contextual information about the source or destination</param>
+        </member>
+        <member name="M:Net.Pkcs11Interop.Common.Pkcs11Exception.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Populates a SerializationInfo with the data needed to serialize the target object
+            </summary>
+            <param name="info">SerializationInfo to populate with data</param>
+            <param name="context">The destination for this serialization</param>
         </member>
         <member name="T:Net.Pkcs11Interop.Common.Pkcs11Uri">
             <summary>
@@ -4024,6 +4095,13 @@
             <param name="message">The message that describes the error</param>
             <param name="innerException">The exception that is the cause of the current exception</param>
         </member>
+        <member name="M:Net.Pkcs11Interop.Common.Pkcs11UriException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Initializes new instance of Pkcs11UriException class with serialized data
+            </summary>
+            <param name="info">SerializationInfo that holds the serialized object data about the exception being thrown</param>
+            <param name="context">StreamingContext that contains contextual information about the source or destination</param>
+        </member>
         <member name="T:Net.Pkcs11Interop.Common.Pkcs11UriSharedUtils">
             <summary>
             Utility class connecting PKCS#11 URI and Pkcs11Interop types
@@ -4409,6 +4487,20 @@
             <param name="message">Message that describes the error</param>
             <param name="errorCode">Error code returned by the last unmanaged function</param>
         </member>
+        <member name="M:Net.Pkcs11Interop.Common.UnmanagedException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Initializes new instance of UnmanagedException class with serialized data
+            </summary>
+            <param name="info">SerializationInfo that holds the serialized object data about the exception being thrown</param>
+            <param name="context">StreamingContext that contains contextual information about the source or destination</param>
+        </member>
+        <member name="M:Net.Pkcs11Interop.Common.UnmanagedException.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Populates a SerializationInfo with the data needed to serialize the target object
+            </summary>
+            <param name="info">SerializationInfo to populate with data</param>
+            <param name="context">The destination for this serialization</param>
+        </member>
         <member name="T:Net.Pkcs11Interop.Common.UnmanagedLibrary">
             <summary>
             Utility class that helps to manage unmanaged dynamic libraries
@@ -4515,6 +4607,13 @@
             Initializes new instance of UnsupportedPlatformException class
             </summary>
             <param name="message">Message that describes the error</param>
+        </member>
+        <member name="M:Net.Pkcs11Interop.Common.UnsupportedPlatformException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Initializes new instance of UnsupportedPlatformException class with serialized data
+            </summary>
+            <param name="info">SerializationInfo that holds the serialized object data about the exception being thrown</param>
+            <param name="context">StreamingContext that contains contextual information about the source or destination</param>
         </member>
         <member name="T:Net.Pkcs11Interop.HighLevelAPI40.LibraryInfo">
             <summary>
@@ -7218,6 +7317,16 @@
         <member name="P:Net.Pkcs11Interop.HighLevelAPI40.Session.SessionId">
             <summary>
             PKCS#11 handle of session
+            </summary>
+        </member>
+        <member name="F:Net.Pkcs11Interop.HighLevelAPI40.Session._closeWhenDisposed">
+            <summary>
+            Flag indicating whether session should be closed when object is disposed
+            </summary>
+        </member>
+        <member name="P:Net.Pkcs11Interop.HighLevelAPI40.Session.CloseWhenDisposed">
+            <summary>
+            Flag indicating whether session should be closed when object is disposed
             </summary>
         </member>
         <member name="M:Net.Pkcs11Interop.HighLevelAPI40.Session.#ctor(Net.Pkcs11Interop.LowLevelAPI40.Pkcs11,System.UInt32)">
@@ -11087,6 +11196,16 @@
             PKCS#11 handle of session
             </summary>
         </member>
+        <member name="F:Net.Pkcs11Interop.HighLevelAPI41.Session._closeWhenDisposed">
+            <summary>
+            Flag indicating whether session should be closed when object is disposed
+            </summary>
+        </member>
+        <member name="P:Net.Pkcs11Interop.HighLevelAPI41.Session.CloseWhenDisposed">
+            <summary>
+            Flag indicating whether session should be closed when object is disposed
+            </summary>
+        </member>
         <member name="M:Net.Pkcs11Interop.HighLevelAPI41.Session.#ctor(Net.Pkcs11Interop.LowLevelAPI41.Pkcs11,System.UInt32)">
             <summary>
             Initializes new instance of Session class
@@ -14954,6 +15073,16 @@
             PKCS#11 handle of session
             </summary>
         </member>
+        <member name="F:Net.Pkcs11Interop.HighLevelAPI80.Session._closeWhenDisposed">
+            <summary>
+            Flag indicating whether session should be closed when object is disposed
+            </summary>
+        </member>
+        <member name="P:Net.Pkcs11Interop.HighLevelAPI80.Session.CloseWhenDisposed">
+            <summary>
+            Flag indicating whether session should be closed when object is disposed
+            </summary>
+        </member>
         <member name="M:Net.Pkcs11Interop.HighLevelAPI80.Session.#ctor(Net.Pkcs11Interop.LowLevelAPI80.Pkcs11,System.UInt64)">
             <summary>
             Initializes new instance of Session class
@@ -18819,6 +18948,16 @@
         <member name="P:Net.Pkcs11Interop.HighLevelAPI81.Session.SessionId">
             <summary>
             PKCS#11 handle of session
+            </summary>
+        </member>
+        <member name="F:Net.Pkcs11Interop.HighLevelAPI81.Session._closeWhenDisposed">
+            <summary>
+            Flag indicating whether session should be closed when object is disposed
+            </summary>
+        </member>
+        <member name="P:Net.Pkcs11Interop.HighLevelAPI81.Session.CloseWhenDisposed">
+            <summary>
+            Flag indicating whether session should be closed when object is disposed
             </summary>
         </member>
         <member name="M:Net.Pkcs11Interop.HighLevelAPI81.Session.#ctor(Net.Pkcs11Interop.LowLevelAPI81.Pkcs11,System.UInt64)">
@@ -23820,6 +23959,11 @@
         <member name="P:Net.Pkcs11Interop.HighLevelAPI.Session.SessionId">
             <summary>
             PKCS#11 handle of session
+            </summary>
+        </member>
+        <member name="P:Net.Pkcs11Interop.HighLevelAPI.Session.CloseWhenDisposed">
+            <summary>
+            Flag indicating whether session should be closed when object is disposed
             </summary>
         </member>
         <member name="M:Net.Pkcs11Interop.HighLevelAPI.Session.#ctor(Net.Pkcs11Interop.HighLevelAPI40.Session)">
