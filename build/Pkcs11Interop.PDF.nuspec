@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+  <metadata>
+    <id>Pkcs11Interop.PDF</id>
+    <version>1.3.0</version>
+    <title>Pkcs11Interop.PDF</title>
+    <authors>Jaroslav Imrich</authors>
+    <owners>Jaroslav Imrich</owners>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <licenseUrl>https://www.pkcs11interop.net/license-pdf.txt</licenseUrl>
+    <projectUrl>https://github.com/jariq/Pkcs11Interop.PDF</projectUrl>
+    <description>Integration layer for Pkcs11Interop and iText (iTextSharp) libraries</description>
+    <releaseNotes></releaseNotes>
+    <copyright>Copyright (c) 2013-2017 JWC s.r.o.</copyright>
+    <language></language>
+    <tags>pkcs pkcs11 security crypto cryptography smartcard hsm itext itextsharp pdf</tags>
+    <dependencies>
+      <dependency id="Pkcs11Interop" version="3.3.0" />
+      <dependency id="iTextSharp" version="5.5.11" />
+    </dependencies>
+  </metadata>
+</package>
