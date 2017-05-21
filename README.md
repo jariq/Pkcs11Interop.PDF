@@ -35,7 +35,9 @@ Pkcs11Interop.PDF API is fully documented with the inline XML documentation that
 
 Pkcs11Interop.PDF source code contains well documented [unit tests](/src/Pkcs11Interop.PDF.Tests) and [demonstration command line application](src/Pkcs11Interop.PDF.Demo) that also serve as official code samples.
 
-General information about digital signatures in PDF documents can be found in a great white paper called [Digital Signatures for PDF documents](http://pages.itextpdf.com/ebook-digital-signatures-for-pdf.html) written by Bruno Lowagie from [iText Software](http://itextpdf.com/). There are also many useful code samples in [iTextSharp tutorial repository](https://github.com/itext/i5ns-tutorial).
+General information about digital signatures in PDF documents can be found in a great white paper called [Digital Signatures for PDF documents](http://pages.itextpdf.com/ebook-digital-signatures-for-pdf.html) written by Bruno Lowagie from [iText Software](http://itextpdf.com/).
+
+There are also many useful code samples in [iTextSharp tutorial repository](https://github.com/itext/i5ns-tutorial).
 
 ## Download
 
@@ -57,7 +59,6 @@ Pkcs11Interop.PDF uses dual-licensing model:
 
 Pick one of the options that best suits your needs:
 
-* Public [mailing list](https://groups.google.com/d/forum/pkcs11interop) available at [pkcs11interop@googlegroups.com](mailto:pkcs11interop@googlegroups.com)
 * Public [issue tracker](https://github.com/jariq/Pkcs11Interop.PDF/issues) available at GitHub.com
 * Questions with [pkcs11 tag](http://stackoverflow.com/questions/tagged/pkcs11) posted at StackOverflow.com
 * Commercial support and consulting from the original developer available at [info@pkcs11interop.net](mailto:info@pkcs11interop.net)
