@@ -385,7 +385,7 @@ namespace Net.Pkcs11Interop.PDF
             if (this._disposed)
                 throw new ObjectDisposedException(this.GetType().FullName);
 
-            if (string.IsNullOrEmpty(tokenSerial) && string.IsNullOrEmpty(tokenLabel))
+            if (string.IsNullOrEmpty(tokenSerial) && tokenLabel == null)
                 throw new ArgumentException("Token serial and/or label has to be specified");
 
             List<Slot> slots = _pkcs11.GetSlotList(true);

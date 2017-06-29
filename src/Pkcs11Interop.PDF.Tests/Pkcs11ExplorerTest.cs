@@ -121,7 +121,7 @@ namespace Net.Pkcs11Interop.PDF.Tests
                     Assert.IsFalse(string.IsNullOrEmpty(tokens[i].ManufacturerId));
                     Assert.IsFalse(string.IsNullOrEmpty(tokens[i].Model));
                     Assert.IsFalse(string.IsNullOrEmpty(tokens[i].SerialNumber));
-                    Assert.IsFalse(string.IsNullOrEmpty(tokens[i].Label));
+                    Assert.IsFalse(tokens[i].Label == null);
                 }
 
                 if (!tokenFound)
